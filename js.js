@@ -151,3 +151,33 @@ recuperar.addEventListener('click', fnRecuperar);
 subtotal.addEventListener('click', fnSubtotal);
 
 
+//--------------------------------------------- FETCH ↓↓ -------------------------------------------------------
+
+const URL_USD_OFICIAL = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
+let compra = [];
+
+
+function cotizaciones (valor) {
+    let usd = document.getElementById('usd');
+    valor.forEach( x => { 
+        if ( x.casa.nombre != 'Argentina' & x.casa.venta != 0){
+            compra.push(x.casa.nombre,x.casa.venta)
+        }
+    });
+}
+
+
+fetch(URL_USD_OFICIAL)
+.then( respuesta => { return respuesta.json()} )
+.then( datos => {
+    //console.log(datos);
+    cotizaciones(datos); 
+} )
+
+//Evento para FETCH ↓↓
+
+function fnUSD (){
+    alert(compra)
+}
+
+usd.addEventListener('click', fnUSD )
